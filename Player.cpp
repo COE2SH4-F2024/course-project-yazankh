@@ -1,33 +1,166 @@
 #include "Player.h"
-
-
+#include <iostream>
+ 
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(objPos (10,5,'O'));
+     
     // more actions to be included
 }
 
 
 Player::~Player()
 {
-    // delete any heap members here
+    delete playerPosList;// delete any heap members here
+    playerPosList = nullptr;
 }
 
-objPos Player::getPlayerPos() const
+const objPosArrayList* Player::getPlayerPos() 
 {
-    // return the reference to the playerPos arrray list
+    return playerPosList; // Return reference to the entire array list
 }
+
 
 void Player::updatePlayerDir()
 {
-        // PPA3 input processing logic          
+        // PPA3 input processing logic    
+    if(this->mainGameMechsRef->getInput() != 0)  // if not null character
+    {
+        switch(this->mainGameMechsRef->getInput())
+        {    
+            case 'E' :               
+            case 'e' :  // exit
+                this->mainGameMechsRef->setExitTrue();
+                break;
+
+            // Add more key processing here
+            case 'W':
+            case 'w':
+                if (this->myDir != DOWN){
+                    this->myDir = UP;
+                    break;
+                }
+                else{
+                    break;
+                }
+            // Add more key processing here
+            case 'S':
+            case 's':
+                if (this->myDir != UP){
+                        
+                        this->myDir = DOWN;
+                        break;
+                    }
+                    else{
+                        break;
+                    }
+                 
+            // Add more key processing here
+            case 'A':
+            case 'a':
+                if (this->myDir != RIGHT){
+                            
+                            this->myDir = LEFT;
+                            break;
+                        }
+                        else{
+                            break;
+                        }
+            case 'D':
+            case 'd':
+                if (this->myDir != LEFT){
+                        
+                        this->myDir = RIGHT;
+                        break;
+                    }
+                    else{
+                        break;
+                    }
+            case 'X':
+            case 'x':
+                mainGameMechsRef->incrementScore();
+                break;
+            case 'L':
+            case 'l':
+                mainGameMechsRef->setLoseFlag();
+                break;
+            case 'J':
+            case 'j':
+                mainGameMechsRef->generateFood(playerPosList);
+                break;
+            default:
+                
+                break;
+
+        }
+         
+        this->mainGameMechsRef->setInput('\0');
+        
+    }
+       
 }
 
 void Player::movePlayer()
 {
-    // PPA3 Finite State Machine logic
+    objPos headElement = this->playerPosList->getHeadElement(); 
+     for(int i = 1; i < playerPosList->getSize();i++){
+        if (headElement.pos->x == playerPosList->getElement(i).pos->x && headElement.pos->y == playerPosList->getElement(i).pos->y)
+        {
+            mainGameMechsRef->setLoseFlag();
+        }
+     }
+        switch(this->myDir)
+    {
+        case UP:
+            headElement.pos->y -= 1;
+             
+            break;
+        case DOWN:
+            headElement.pos->y += 1;
+             
+            break;
+        case LEFT:
+            headElement.pos->x -= 1;
+             
+        
+            break;
+        case RIGHT:
+            headElement.pos->x += 1;
+             
+            
+            break;
+        case STOP:
+            
+            // No movement
+            break;
+    }
+    // [TODO] : Heed the border wraparound!!!
+    if (headElement.pos->x>=this->mainGameMechsRef->getBoardSizeX()){
+        headElement.pos->x = 1;
+    }
+    else if (headElement.pos->x<1){
+        headElement.pos->x = 19;
+    }
+    if (headElement.pos->y>=this->mainGameMechsRef->getBoardSizeY()){
+        headElement.pos->y = 1;
+    }
+    else if (headElement.pos->y<1){
+        headElement.pos->y = 9;
+    }
+    if (headElement.pos->x == mainGameMechsRef->getFoodPos().pos->x && headElement.pos->y == mainGameMechsRef->getFoodPos().pos->y){
+        playerPosList->insertHead(objPos(headElement.pos->x, headElement.pos->y, 'O'));
+        mainGameMechsRef->generateFood(playerPosList);
+        mainGameMechsRef->incrementScore();
+    }
+    else{
+    playerPosList->insertHead(objPos(headElement.pos->x, headElement.pos->y, 'O'));
+    playerPosList->removeTail();
 }
+    }
+// PPA3 Finite State Machine logic
+
 
 // More methods to be added
