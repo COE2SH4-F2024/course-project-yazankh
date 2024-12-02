@@ -41,7 +41,7 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    game = new GameMechs(20,10);
+    game = new GameMechs(30,15);
     Playerptr = new Player(game);
     game->generateFood(Playerptr->getPlayerPos());
     

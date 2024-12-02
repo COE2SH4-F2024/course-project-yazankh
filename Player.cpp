@@ -6,7 +6,7 @@ Player::Player(GameMechs* thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
     playerPosList = new objPosArrayList();
-    playerPosList->insertHead(objPos (10,5,'O'));
+    playerPosList->insertHead(objPos (15,7,'O'));
      
     // more actions to be included
 }
@@ -142,13 +142,13 @@ void Player::movePlayer()
         headElement.pos->x = 1;
     }
     else if (headElement.pos->x<1){
-        headElement.pos->x = 19;
+        headElement.pos->x = mainGameMechsRef->getBoardSizeX()-1;
     }
     if (headElement.pos->y>=this->mainGameMechsRef->getBoardSizeY()){
         headElement.pos->y = 1;
     }
     else if (headElement.pos->y<1){
-        headElement.pos->y = 9;
+        headElement.pos->y = mainGameMechsRef->getBoardSizeY()-1;
     }
     if (headElement.pos->x == mainGameMechsRef->getFoodPos().pos->x && headElement.pos->y == mainGameMechsRef->getFoodPos().pos->y){
         playerPosList->insertHead(objPos(headElement.pos->x, headElement.pos->y, 'O'));
