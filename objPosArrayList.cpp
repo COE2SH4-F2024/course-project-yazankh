@@ -8,14 +8,14 @@
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.
 
-objPosArrayList::objPosArrayList()
+objPosArrayList::objPosArrayList()//initialize default values and allocate objPos's in list
 {
     arrayCapacity = 200;
     listSize = 0;
     aList = new objPos[arrayCapacity];
 }
 
-objPosArrayList::~objPosArrayList()
+objPosArrayList::~objPosArrayList()//delete everything in the list when destructor invoked.
 {
     if (aList != nullptr){
         delete[] aList;
@@ -23,12 +23,12 @@ objPosArrayList::~objPosArrayList()
     }
 }
 
-int objPosArrayList::getSize() const
+int objPosArrayList::getSize() const //most of these are self explanatory.
 {
     return listSize;
 }
 
-void objPosArrayList::insertHead(objPos thisPos)
+void objPosArrayList::insertHead(objPos thisPos)//check if list is full if not add head
 {
     if (listSize >= arrayCapacity){
         return;
@@ -40,7 +40,7 @@ void objPosArrayList::insertHead(objPos thisPos)
     listSize++;
 }
 
-void objPosArrayList::insertTail(objPos thisPos)
+void objPosArrayList::insertTail(objPos thisPos) //check if list is full if not add tail
 {
     if (listSize >= arrayCapacity){
         return;
@@ -49,7 +49,7 @@ void objPosArrayList::insertTail(objPos thisPos)
     listSize++;
 }
 
-void objPosArrayList::removeHead()
+void objPosArrayList::removeHead() //check if list is empty if not remove head
 {
     if (listSize <= 0){
         return;

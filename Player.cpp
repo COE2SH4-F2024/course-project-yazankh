@@ -150,13 +150,13 @@ void Player::movePlayer()
     else if (headElement.pos->y<1){
         headElement.pos->y = mainGameMechsRef->getBoardSizeY()-1;
     }
-    if (headElement.pos->x == mainGameMechsRef->getFoodPos().pos->x && headElement.pos->y == mainGameMechsRef->getFoodPos().pos->y){
-        playerPosList->insertHead(objPos(headElement.pos->x, headElement.pos->y, 'O'));
+    if (headElement.pos->x == mainGameMechsRef->getFoodPos().pos->x && headElement.pos->y == mainGameMechsRef->getFoodPos().pos->y){ //Check if snake ate food
+        playerPosList->insertHead(objPos(headElement.pos->x, headElement.pos->y, 'O')); //if it did then keep the tail
         mainGameMechsRef->generateFood(playerPosList);
         mainGameMechsRef->incrementScore();
     }
     else{
-    playerPosList->insertHead(objPos(headElement.pos->x, headElement.pos->y, 'O'));
+    playerPosList->insertHead(objPos(headElement.pos->x, headElement.pos->y, 'O')); //if it didnt eat food then remove tail
     playerPosList->removeTail();
 }
     }

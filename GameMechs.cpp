@@ -89,17 +89,17 @@ const objPos GameMechs::getFoodPos(){
     return foodPos;
 }
 
-void GameMechs::generateFood(const objPosArrayList* blockOff){
+void GameMechs::generateFood(const objPosArrayList* blockOff){ 
     srand(time(NULL));
     int x,y,i;
     int validPosition = 0;
-    while (!validPosition){
+    while (!validPosition){ //check if food is ontop of any element in the snake before setting those coordinates
          x = rand()%boardSizeX;
          y = rand()%boardSizeY;
         
         for (i = 0; i < blockOff->getSize();i++){
 
-            if(x == blockOff->getElement(i).pos->x && y == blockOff->getElement(i).pos->y){
+            if(x == blockOff->getElement(i).pos->x && y == blockOff->getElement(i).pos->y){//keep generation coordinates untill they are not on top of the snake
                 continue;
             }
 

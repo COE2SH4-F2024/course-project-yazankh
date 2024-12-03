@@ -37,7 +37,7 @@ int main(void)
 }
 
 
-void Initialize(void)
+void Initialize(void) //initialize gamemechanics, player object, and generate food.
 {
     MacUILib_init();
     MacUILib_clearScreen();
@@ -48,14 +48,14 @@ void Initialize(void)
     
 }
 
-void GetInput(void)
+void GetInput(void) //check for input
 {
     if (MacUILib_hasChar() == 1){
    game->setInput(MacUILib_getChar());
     }
 }
 
-void RunLogic(void)
+void RunLogic(void) //check what direction player is going and update movement accordingly.
 {
     
     Playerptr->updatePlayerDir();
@@ -118,10 +118,10 @@ void CleanUp(void)
     MacUILib_clearScreen();    
     if (game->getLoseFlagStatus()==1)
     {
-        cout<<endl<<"You Lost!"<<endl;
+        cout<<endl<<"You Lost!"<<endl; //if the lose flag was invoked print out lose message.
         
     }
-    delete game;
+    delete game; //invoke the destructors to delete all heap members
     game = nullptr;
     delete Playerptr;
     Playerptr = nullptr;
